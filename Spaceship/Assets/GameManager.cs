@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,8 +25,11 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI distanceText; // Texto de distância no Canvas
 
-    private float distanceTraveled = 0f; // Distância total percorrida
+    private float distanceTraveled = 0f; // Distância total percorrida  
     public float distanceSpeedFactor = 100f; // Fator base de velocidade de contagem
+
+    public static float distanciaFinal = 0f;
+
 
 
     void Start()
@@ -56,6 +60,8 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Game Over: Out of Fuel");
+            distanciaFinal = distanceTraveled;
+            SceneManager.LoadScene("GameOver");
         }
 
         float newMultiplier = Mathf.Min(maxSpeedMultiplier, 1 + (timeWithoutDamage / 50f));
@@ -94,6 +100,8 @@ public class GameManager : MonoBehaviour
         {
             currentHealth = 0;
             Debug.Log("Game Over: No Health");
+            distanciaFinal = distanceTraveled;
+            SceneManager.LoadScene("GameOver");
         }
 
         UpdateHealthDisplay();
